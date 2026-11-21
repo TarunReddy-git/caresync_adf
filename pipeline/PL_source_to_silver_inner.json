@@ -256,7 +256,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@not(equals(activity('Read Table details').output.firstRow.load_type,'FULL' ))",
+						"value": "@not(equals(activity('Read Table details').output.firstRow.load_type,'FULL'))",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
@@ -307,7 +307,7 @@
 							"typeProperties": {
 								"variableName": "watermark_value",
 								"value": {
-									"value": "@activity('Read water mark').output.watermark_value",
+									"value": "@activity('Read water mark').output.firstRow.watermark_value",
 									"type": "Expression"
 								}
 							}
