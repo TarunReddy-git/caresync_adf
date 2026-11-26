@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "body_header",
-					"value": "Ingestion and transformation for this project is complete and below is status"
+					"value": "Hi All,\nIngestion and transformation for this project is complete and below is status\n\n"
 				}
 			},
 			{
