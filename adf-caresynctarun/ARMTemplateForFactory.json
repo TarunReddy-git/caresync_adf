@@ -1408,7 +1408,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "body_header",
-							"value": "Ingestion and transformation for this project is complete and below is status"
+							"value": "Hi All,\nIngestion and transformation for this project is complete and below is status\n\n"
 						}
 					},
 					{
@@ -1422,7 +1422,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "body_fotter",
-							"value": "For any information please reach out to same e-mail\nThanks,\nTarun"
+							"value": "For any information please reach out to same e-mail\n\nThanks,\nTarun"
 						}
 					},
 					{
@@ -1444,7 +1444,7 @@
 						"typeProperties": {
 							"variableName": "email_subject",
 							"value": {
-								"value": "@{pipeline().globalParameters.env} | @{if( greater(activity('Check over all failed count').output.count,0 ) ,'FAILED' ,'SUCCESS' ) }| CARESYNC_MASTER_RUN",
+								"value": "@{pipeline().globalParameters.env} | @{if( greater(activity('Check over all failed count').output.firstRow.count,0 ) ,'FAILED' ,'SUCCESS' ) }| CARESYNC_MASTER_RUN",
 								"type": "Expression"
 							}
 						}
@@ -1465,7 +1465,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "SELECT COUNT(*) from ctrl.audit_log where adf_run_id='@{pipeline().parameters.adf_run_id}' and status !='SUCCESS';\n",
+									"value": "SELECT COUNT(*) as count from ctrl.audit_log where adf_run_id='@{pipeline().parameters.adf_run_id}' and status !='SUCCESS';\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -1476,7 +1476,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"firstRowOnly": false
+							"firstRowOnly": true
 						}
 					},
 					{
@@ -1517,6 +1517,40 @@
 							"variableName": "logic_apps_body",
 							"value": {
 								"value": "{\n\"subject\":\"@{variables('email_subject')}\",\n\"email_receipiemts\":\"@{pipeline().globalParameters.email_receipiemts}\",\n\"body_header\":\"@{variables('body_header')}\",\n\"body_fotter\":\"@{variables('body_fotter')}\",\n\"status_table\":@{activity('Read all tables status').output.value}\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Prepare logic apps body",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 2,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@pipeline().globalParameters.logic_apps_url",
+								"type": "Expression"
+							},
+							"body": {
+								"value": "@variables('logic_apps_body')",
 								"type": "Expression"
 							}
 						}
