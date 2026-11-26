@@ -5,6 +5,10 @@
 			"email_receipiemts": {
 				"type": "string",
 				"value": "tarunreddy1503@gmail.com"
+			},
+			"env": {
+				"type": "string",
+				"value": "DEV"
 			}
 		}
 	},
