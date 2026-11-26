@@ -1,0 +1,12 @@
+{
+	"name": "adf-caresynctarun",
+	"properties": {
+		"globalParameters": {
+			"email_receipiemts": {
+				"type": "string",
+				"value": "tarunreddy1503@gmail.com"
+			}
+		}
+	},
+	"location": "centralindia"
+}
