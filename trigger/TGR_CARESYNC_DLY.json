@@ -2,7 +2,7 @@
 	"name": "TGR_CARESYNC_DLY",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
